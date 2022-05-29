@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:render_object/render_object/child_render_object.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -9,7 +10,9 @@ class HomeView extends StatelessWidget {
       body: Center(
         child: Container(
           color: Colors.green,
-          child: const CircleWidget(200),
+          child: CustomColumn(
+            children: const [],
+          ),
         ),
       ),
     );
@@ -52,7 +55,7 @@ class RenderCircleBox extends RenderBox {
 
   @override
   void performLayout() {
-    size = Size.fromRadius(circleSize);
+    size = constraints.constrain(Size.fromRadius(circleSize / 2));
   }
 
   @override
@@ -66,11 +69,10 @@ class RenderCircleBox extends RenderBox {
       ..color = Colors.blue
       ..style = PaintingStyle.fill;
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, circleSize, circleSize),
-        circlePaint..color = Colors.white);
+    canvas.drawRect(Rect.fromLTWH(0, 0, circleSize, circleSize), circlePaint);
 
-    canvas.drawCircle(
-        Offset(circleSize / 2, circleSize / 2), circleSize / 2, circlePaint);
+    canvas.drawCircle(Offset(circleSize / 2, circleSize / 2), circleSize / 2,
+        circlePaint..color = Colors.white);
 
     canvas.restore();
   }
