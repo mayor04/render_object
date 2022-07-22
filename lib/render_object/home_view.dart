@@ -7,12 +7,27 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Colors.green,
-          child: CustomColumn(
-            children: const [],
-          ),
+      body: Container(
+        color: Colors.green,
+        // padding: const EdgeInsets.all(30),
+        child: CustomColumn(
+          children: [
+            Container(
+              height: 100,
+              width: 200,
+              color: Colors.yellow,
+            ),
+            GestureDetector(
+              onTap: () {
+                print('Tap item');
+              },
+              child: Container(
+                height: 200,
+                width: 200,
+                color: Colors.red,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -31,8 +46,7 @@ class CircleWidget extends LeafRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant RenderCircleBox renderObject) {
+  void updateRenderObject(BuildContext context, covariant RenderCircleBox renderObject) {
     renderObject.circleSize = size;
   }
 }
@@ -55,7 +69,7 @@ class RenderCircleBox extends RenderBox {
 
   @override
   void performLayout() {
-    size = constraints.constrain(Size.fromRadius(circleSize / 2));
+    size = Size.fromRadius(circleSize);
   }
 
   @override
@@ -69,10 +83,9 @@ class RenderCircleBox extends RenderBox {
       ..color = Colors.blue
       ..style = PaintingStyle.fill;
 
-    canvas.drawRect(Rect.fromLTWH(0, 0, circleSize, circleSize), circlePaint);
+    canvas.drawRect(Rect.fromLTWH(0, 0, circleSize, circleSize), circlePaint..color = Colors.white);
 
-    canvas.drawCircle(Offset(circleSize / 2, circleSize / 2), circleSize / 2,
-        circlePaint..color = Colors.white);
+    canvas.drawCircle(Offset(circleSize / 2, circleSize / 2), circleSize / 2, circlePaint);
 
     canvas.restore();
   }
